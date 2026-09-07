@@ -46,6 +46,26 @@ swift test --filter MRRCalculatorTests      # one suite
 swift test --filter "monthly price"         # one test
 ```
 
+### Command Line Tools workaround (verified during T01)
+
+On the local Apple Swift 6.3.3 / Command Line Tools 26.6 installation, plain
+`swift test` fails to discover the installed Testing framework. The user approved
+the following equivalent full-suite command for T01; it adds compile/link/runtime
+search paths and does not skip tests or add package dependencies:
+
+```bash
+swift test \
+  -Xswiftc -F/Library/Developer/CommandLineTools/Library/Developer/Frameworks \
+  -Xlinker -F/Library/Developer/CommandLineTools/Library/Developer/Frameworks \
+  -Xlinker -rpath \
+  -Xlinker /Library/Developer/CommandLineTools/Library/Developer/Frameworks \
+  -Xlinker -rpath \
+  -Xlinker /Library/Developer/CommandLineTools/Library/Developer/usr/lib
+```
+
+Use normal `swift test` on toolchains where discovery works. No system files were
+changed or additional tools installed for this workaround.
+
 ## Non-negotiables
 
 **No network in tests.** Ever. Not even "just this one integration test". `LiveStripeClient`

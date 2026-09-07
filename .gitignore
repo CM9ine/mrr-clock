@@ -6,6 +6,7 @@
 .swiftpm/
 DerivedData/
 *.xcuserstate
+*.xcuserdatadata
 xcuserdata/
 
 # Private notes — personal targets, real amounts, anything not for a public repo

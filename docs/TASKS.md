@@ -60,7 +60,7 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 ## Progress
 Tracked as issues [#1–#19](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones.
 Tick here as you close them:
-- [ ] [T01](https://github.com/CM9ine/mrr-clock/issues/1) · [ ] [T02](https://github.com/CM9ine/mrr-clock/issues/2) · [ ] [T03](https://github.com/CM9ine/mrr-clock/issues/3)
+- [x] [T01](https://github.com/CM9ine/mrr-clock/issues/1) · [ ] [T02](https://github.com/CM9ine/mrr-clock/issues/2) · [ ] [T03](https://github.com/CM9ine/mrr-clock/issues/3)
 - [ ] [T04](https://github.com/CM9ine/mrr-clock/issues/4) · [ ] [T05](https://github.com/CM9ine/mrr-clock/issues/5) · [ ] [T06](https://github.com/CM9ine/mrr-clock/issues/6) · [ ] [T07](https://github.com/CM9ine/mrr-clock/issues/7)
 - [ ] [T08](https://github.com/CM9ine/mrr-clock/issues/8) · [ ] [T09](https://github.com/CM9ine/mrr-clock/issues/9) · [ ] [T10](https://github.com/CM9ine/mrr-clock/issues/10) · [ ] [T11](https://github.com/CM9ine/mrr-clock/issues/11)
 - [ ] [T12](https://github.com/CM9ine/mrr-clock/issues/12) · [ ] [T13](https://github.com/CM9ine/mrr-clock/issues/13) · [ ] [T14](https://github.com/CM9ine/mrr-clock/issues/14) · [ ] [T15](https://github.com/CM9ine/mrr-clock/issues/15)
