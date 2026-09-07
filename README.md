@@ -30,7 +30,10 @@ Menu bar title (configurable): `387d · $1.2k`
 
 ## Status
 
-**Planning.** No code has been written yet. This repo currently contains only the plan.
+**Planning — no code yet.** The plan is complete and broken into 19 tasks, tracked as
+[issues #1–#19](https://github.com/CM9ine/mrr-clock/issues) across
+[six milestones](https://github.com/CM9ine/mrr-clock/milestones). Start at
+[#1](https://github.com/CM9ine/mrr-clock/issues/1) and work in order.
 
 ## Read in this order
 

@@ -7,63 +7,64 @@ Work them in order — each depends only on tasks above it.
 
 ## M1 · Foundation
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T01 | Package skeleton and a green `swift test` | — | [T01](tasks/T01-package-skeleton.md) |
-| T02 | `Money` — integer minor units | T01 | [T02](tasks/T02-money.md) |
-| T03 | `Countdown` — calendar-day maths | T01 | [T03](tasks/T03-countdown.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T01 | Package skeleton and a green `swift test` | — | [T01](tasks/T01-package-skeleton.md) | [#1](https://github.com/CM9ine/mrr-clock/issues/1) |
+| T02 | `Money` — integer minor units | T01 | [T02](tasks/T02-money.md) | [#2](https://github.com/CM9ine/mrr-clock/issues/2) |
+| T03 | `Countdown` — calendar-day maths | T01 | [T03](tasks/T03-countdown.md) | [#3](https://github.com/CM9ine/mrr-clock/issues/3) |
 
 ## M2 · Stripe layer
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T04 | Stripe DTOs, fixture decoding, stub factories | T02 | [T04](tasks/T04-stripe-dtos.md) |
-| T05 | `StripeAPI` protocol, pagination, `FakeStripeClient` | T04 | [T05](tasks/T05-stripe-api-pagination.md) |
-| T06 | `LiveStripeClient` — requests, auth, typed errors | T05 | [T06](tasks/T06-live-stripe-client.md) |
-| T07 | `KeyStore` — Keychain and in-memory | T01 | [T07](tasks/T07-keystore.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T04 | Stripe DTOs, fixture decoding, stub factories | T02 | [T04](tasks/T04-stripe-dtos.md) | [#4](https://github.com/CM9ine/mrr-clock/issues/4) |
+| T05 | `StripeAPI` protocol, pagination, `FakeStripeClient` | T04 | [T05](tasks/T05-stripe-api-pagination.md) | [#5](https://github.com/CM9ine/mrr-clock/issues/5) |
+| T06 | `LiveStripeClient` — requests, auth, typed errors | T05 | [T06](tasks/T06-live-stripe-client.md) | [#6](https://github.com/CM9ine/mrr-clock/issues/6) |
+| T07 | `KeyStore` — Keychain and in-memory | T01 | [T07](tasks/T07-keystore.md) | [#7](https://github.com/CM9ine/mrr-clock/issues/7) |
 
 ## M3 · The numbers
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T08 | `MRRCalculator` — normalise, filter, discount | T04 | [T08](tasks/T08-mrr-calculator.md) |
-| T09 | MRR breakdown by product, top N + Other | T08 | [T09](tasks/T09-mrr-breakdown.md) |
-| T10 | `EarningsCalculator` — earned to date | T04 | [T10](tasks/T10-earnings-calculator.md) |
-| T11 | `Projection` — growth-compounded forecast | T02, T03 | [T11](tasks/T11-projection.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T08 | `MRRCalculator` — normalise, filter, discount | T04 | [T08](tasks/T08-mrr-calculator.md) | [#8](https://github.com/CM9ine/mrr-clock/issues/8) |
+| T09 | MRR breakdown by product, top N + Other | T08 | [T09](tasks/T09-mrr-breakdown.md) | [#9](https://github.com/CM9ine/mrr-clock/issues/9) |
+| T10 | `EarningsCalculator` — earned to date | T04 | [T10](tasks/T10-earnings-calculator.md) | [#10](https://github.com/CM9ine/mrr-clock/issues/10) |
+| T11 | `Projection` — growth-compounded forecast | T02, T03 | [T11](tasks/T11-projection.md) | [#11](https://github.com/CM9ine/mrr-clock/issues/11) |
 
 ## M4 · Goals and state
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T12 | **`Goal` and `GoalStore`** — configurable goals | T02, T03 | [T12](tasks/T12-goals.md) |
-| T13 | `Snapshot`, `Config`, and the disk cache | T08–T12 | [T13](tasks/T13-snapshot-cache.md) |
-| T14 | `RefreshCoordinator` — the state machine | T05, T07, T12, T13 | [T14](tasks/T14-refresh-coordinator.md) |
-| T15 | `MenuBarFormatter` — display strings | T13 | [T15](tasks/T15-menubar-formatter.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T12 | **`Goal` and `GoalStore`** — configurable goals | T02, T03 | [T12](tasks/T12-goals.md) | [#12](https://github.com/CM9ine/mrr-clock/issues/12) |
+| T13 | `Snapshot`, `Config`, and the disk cache | T08–T12 | [T13](tasks/T13-snapshot-cache.md) | [#13](https://github.com/CM9ine/mrr-clock/issues/13) |
+| T14 | `RefreshCoordinator` — the state machine | T05, T07, T12, T13 | [T14](tasks/T14-refresh-coordinator.md) | [#14](https://github.com/CM9ine/mrr-clock/issues/14) |
+| T15 | `MenuBarFormatter` — display strings | T13 | [T15](tasks/T15-menubar-formatter.md) | [#15](https://github.com/CM9ine/mrr-clock/issues/15) |
 
 ## M5 · The app
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T16 | Xcode shell, `MenuBarExtra`, popover | T14, T15 | [T16](tasks/T16-app-shell.md) |
-| T17 | Goals UI and Settings | T16 | [T17](tasks/T17-goals-settings-ui.md) |
-| T18 | Auto-refresh scheduling and launch at login | T17 | [T18](tasks/T18-scheduling-launch.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T16 | Xcode shell, `MenuBarExtra`, popover | T14, T15 | [T16](tasks/T16-app-shell.md) | [#16](https://github.com/CM9ine/mrr-clock/issues/16) |
+| T17 | Goals UI and Settings | T16 | [T17](tasks/T17-goals-settings-ui.md) | [#17](https://github.com/CM9ine/mrr-clock/issues/17) |
+| T18 | Auto-refresh scheduling and launch at login | T17 | [T18](tasks/T18-scheduling-launch.md) | [#18](https://github.com/CM9ine/mrr-clock/issues/18) |
 
 ## M6 · Ship
 
-| # | Task | Depends | File |
-| --- | --- | --- | --- |
-| T19 | Release build, signing, install, live key | T18 | [T19](tasks/T19-release.md) |
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T19 | Release build, signing, install, live key | T18 | [T19](tasks/T19-release.md) | [#19](https://github.com/CM9ine/mrr-clock/issues/19) |
 
 ---
 
 ## Progress
-
-- [ ] T01 · [ ] T02 · [ ] T03
-- [ ] T04 · [ ] T05 · [ ] T06 · [ ] T07
-- [ ] T08 · [ ] T09 · [ ] T10 · [ ] T11
-- [ ] T12 · [ ] T13 · [ ] T14 · [ ] T15
-- [ ] T16 · [ ] T17 · [ ] T18
-- [ ] T19
+Tracked as issues [#1–#19](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones.
+Tick here as you close them:
+- [ ] [T01](https://github.com/CM9ine/mrr-clock/issues/1) · [ ] [T02](https://github.com/CM9ine/mrr-clock/issues/2) · [ ] [T03](https://github.com/CM9ine/mrr-clock/issues/3)
+- [ ] [T04](https://github.com/CM9ine/mrr-clock/issues/4) · [ ] [T05](https://github.com/CM9ine/mrr-clock/issues/5) · [ ] [T06](https://github.com/CM9ine/mrr-clock/issues/6) · [ ] [T07](https://github.com/CM9ine/mrr-clock/issues/7)
+- [ ] [T08](https://github.com/CM9ine/mrr-clock/issues/8) · [ ] [T09](https://github.com/CM9ine/mrr-clock/issues/9) · [ ] [T10](https://github.com/CM9ine/mrr-clock/issues/10) · [ ] [T11](https://github.com/CM9ine/mrr-clock/issues/11)
+- [ ] [T12](https://github.com/CM9ine/mrr-clock/issues/12) · [ ] [T13](https://github.com/CM9ine/mrr-clock/issues/13) · [ ] [T14](https://github.com/CM9ine/mrr-clock/issues/14) · [ ] [T15](https://github.com/CM9ine/mrr-clock/issues/15)
+- [ ] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [ ] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
+- [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
 
 ## Notes on sequencing
 
