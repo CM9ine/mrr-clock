@@ -1,9 +1,10 @@
 # Task list
 
-19 tasks. Each is one focused session: read the task file, read the docs it names, write
+20 tasks: 19 product tasks and one tooling follow-up. Each is one focused session: read the task file, read the docs it names, write
 the tests, make them pass. Rules in [TDD.md](TDD.md). Numbers in [METRICS.md](METRICS.md).
 
-Work them in order — each depends only on tasks above it. To hand one to an agent, use
+Work T01–T19 in order — each depends only on tasks above it.
+T20 is an independently assignable foundation follow-up; it may be worked now. To hand one to an agent, use
 the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task itself.
 
 ## M1 · Foundation
@@ -55,10 +56,19 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 | --- | --- | --- | --- | --- |
 | T19 | Release build, signing, install, live key | T18 | [T19](tasks/T19-release.md) | [#19](https://github.com/CM9ine/mrr-clock/issues/19) |
 
+## Tooling follow-up · M1
+
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T20 | Make plain `swift test` work locally and in CI | T01 | [T20](tasks/T20-swift-test-toolchain.md) | [#20](https://github.com/CM9ine/mrr-clock/issues/20) |
+
+Assign T20 explicitly to an agent: the default lowest-open-issue prompt still selects
+T04 while it remains open. T20 does not block the existing product sequence.
+
 ---
 
 ## Progress
-Tracked as issues [#1–#19](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones.
+Tracked as issues [#1–#20](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones.
 Tick here as you close them:
 - [x] [T01](https://github.com/CM9ine/mrr-clock/issues/1) · [x] [T02](https://github.com/CM9ine/mrr-clock/issues/2) · [x] [T03](https://github.com/CM9ine/mrr-clock/issues/3)
 - [ ] [T04](https://github.com/CM9ine/mrr-clock/issues/4) · [ ] [T05](https://github.com/CM9ine/mrr-clock/issues/5) · [ ] [T06](https://github.com/CM9ine/mrr-clock/issues/6) · [ ] [T07](https://github.com/CM9ine/mrr-clock/issues/7)
@@ -66,6 +76,7 @@ Tick here as you close them:
 - [ ] [T12](https://github.com/CM9ine/mrr-clock/issues/12) · [ ] [T13](https://github.com/CM9ine/mrr-clock/issues/13) · [ ] [T14](https://github.com/CM9ine/mrr-clock/issues/14) · [ ] [T15](https://github.com/CM9ine/mrr-clock/issues/15)
 - [ ] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [ ] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
 - [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
+- [ ] [T20](https://github.com/CM9ine/mrr-clock/issues/20)
 
 ## Notes on sequencing
 
