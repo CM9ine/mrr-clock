@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Swift / Xcode
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Private notes — personal targets, real amounts, anything not for a public repo
+*.local.md
+
+# Never
+*.env
+secrets/
