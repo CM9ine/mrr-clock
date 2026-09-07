@@ -50,6 +50,8 @@ Menu bar title (configurable): `387d · $1.2k`
 
 ## Stack
 
+For local builds and tests, follow the [supported macOS toolchain setup](docs/TDD.md#supported-macos-development-setup-t20).
+
 - Swift 6.3 / SwiftUI `MenuBarExtra`, macOS 14+
 - Swift Package Manager for the testable core, thin Xcode shell for the app
 - [Swift Testing](https://developer.apple.com/documentation/testing) (`import Testing`) for tests

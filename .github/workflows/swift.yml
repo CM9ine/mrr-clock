@@ -1,0 +1,37 @@
+name: Swift
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-26
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Library/Developer/CommandLineTools
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Swift.org toolchain
+        run: |
+          curl -fL https://download.swift.org/swiftly/darwin/swiftly-1.1.2.pkg -o "$RUNNER_TEMP/swiftly.pkg"
+          pkgutil --check-signature "$RUNNER_TEMP/swiftly.pkg"
+          installer -pkg "$RUNNER_TEMP/swiftly.pkg" -target CurrentUserHomeDirectory
+          ~/.swiftly/bin/swiftly init --skip-install --no-modify-profile --assume-yes
+          ~/.swiftly/bin/swiftly install "$(cat .swift-version)" --assume-yes
+          ~/.swiftly/bin/swiftly link --assume-yes
+          echo "$HOME/.swiftly/bin" >> "$GITHUB_PATH"
+      - name: Record toolchain
+        run: |
+          command -v swift
+          swift --version
+          xcode-select -p
+          xcrun --find swift
+          xcrun --show-sdk-path
+      - name: Clean build
+        run: |
+          swift package clean
+          swift build
+      - name: Full test suite
+        run: swift test
