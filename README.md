@@ -46,6 +46,7 @@ Menu bar title (configurable): `387d · $1.2k`
 | [docs/TDD.md](docs/TDD.md) | The working rules for every task |
 | [docs/TASKS.md](docs/TASKS.md) | The ordered task list |
 | [docs/tasks/](docs/tasks/) | One file per task, each with its tests spelled out |
+| [docs/AGENT-PROMPT.md](docs/AGENT-PROMPT.md) | The reusable prompt for an agent implementing the next task |
 
 ## Stack
 

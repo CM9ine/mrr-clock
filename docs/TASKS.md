@@ -3,7 +3,8 @@
 19 tasks. Each is one focused session: read the task file, read the docs it names, write
 the tests, make them pass. Rules in [TDD.md](TDD.md). Numbers in [METRICS.md](METRICS.md).
 
-Work them in order — each depends only on tasks above it.
+Work them in order — each depends only on tasks above it. To hand one to an agent, use
+the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task itself.
 
 ## M1 · Foundation
 
