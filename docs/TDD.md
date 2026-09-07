@@ -72,8 +72,10 @@ changed or additional tools installed for this workaround.
 is tested through an injected `URLProtocol` stub or a `HTTPTransport` protocol, never
 against `api.stripe.com`. A suite that needs the internet is a suite that fails on a plane.
 
-**No `Date()` in tests or in the code under test.** Time arrives as a parameter or through
-an injected `Clock`. Every date-dependent test pins an explicit instant:
+**No `Date()` in tests or application logic.** The sole exception is `SystemClock`,
+the production adapter that reads real time. Time arrives as a parameter or through
+an injected `Clock`. Test `FixedClock` with an explicit instant; do not compare live time
+against a wall-clock deadline. Every date-dependent test pins an explicit instant:
 
 ```swift
 let now = Date(iso: "2026-09-07T09:00:00Z")

@@ -58,8 +58,8 @@ Pin a calendar with an explicit time zone in every test. Add a small
    calendar in America/Los_Angeles → **3**.
 9. **`crosses a leap day correctly`** — now `2028-02-28`, target `2028-03-01` → **2**
    (2028 is a leap year).
-10. **`FixedClock returns the instant it was given`** — and `SystemClock.now` is within a
-    second of `Date()`.
+10. **`FixedClock returns the instant it was given`**. `SystemClock` is the sole
+    production adapter allowed to call `Date()`; no live-clock comparison belongs in tests.
 
 ## Done when
 
