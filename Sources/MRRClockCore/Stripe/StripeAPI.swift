@@ -1,12 +1,5 @@
 import Foundation
 
-/// Errors raised while accessing Stripe data.
-public enum StripeError: Error, Equatable {
-    case unauthorized
-    case malformedPage
-    case paginationLimitExceeded
-}
-
 /// The Stripe data seam consumed by the core refresh pipeline.
 public protocol StripeAPI: Sendable {
     func activeSubscriptions(includeTrials: Bool) async throws -> [Subscription]
