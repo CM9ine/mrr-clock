@@ -25,12 +25,89 @@ public struct MRRResult: Equatable, Sendable {
     public let churnRisk: Money
 }
 
+/// One rounded product contribution to MRR (METRICS.md § Breakdown by product).
+public struct ProductLine: Equatable, Sendable {
+    public let productID: String
+    public let name: String
+    public let amount: Money
+
+    public init(productID: String, name: String, amount: Money) {
+        self.productID = productID
+        self.name = name
+        self.amount = amount
+    }
+}
+
 /// Calculates monthly recurring revenue using the normalization rules in METRICS.md § MRR.
 public struct MRRCalculator: Sendable {
     private let clock: any Clock
 
     public init(clock: any Clock = SystemClock()) {
         self.clock = clock
+    }
+
+    /// Groups MRR by product using METRICS.md § Breakdown by product.
+    public func breakdown(
+        subscriptions: [Subscription],
+        productNames: [String: String],
+        config: Config
+    ) -> [ProductLine] {
+        var totals: [String: Decimal] = [:]
+        for subscription in subscriptions {
+            let includedStatus = subscription.status == "active"
+                || (subscription.status == "trialing" && config.includeTrials)
+            guard includedStatus else { continue }
+            guard subscription.currency.lowercased() == config.currency else { continue }
+            var items: [(productID: String, monthly: Decimal, factor: Decimal)] = []
+            for item in subscription.items.data {
+                guard let amount = item.price.unitAmount,
+                      let recurring = item.price.recurring,
+                      recurring.usageType == "licensed",
+                      item.price.billingScheme == "per_unit" else { continue }
+                let itemFactor = factor(for: recurring)
+                let monthly = Decimal(amount) * Decimal(item.quantity) * itemFactor
+                items.append((item.price.product, monthly, itemFactor))
+            }
+
+            let gross = items.reduce(Decimal.zero) { $0 + $1.monthly }
+            var net = gross
+            if let discount = subscription.discount,
+               !(discount.coupon.duration == "once" && discount.end.map { $0 < clock.now } == true) {
+                if let percentOff = discount.coupon.percentOff {
+                    net *= 1 - percentOff / 100
+                } else if let amountOff = discount.coupon.amountOff,
+                          let discountFactor = items.first?.factor {
+                    net -= Decimal(amountOff) * discountFactor
+                }
+            }
+            net = max(0, net)
+            let discountMultiplier = gross == 0 ? Decimal.zero : net / gross
+            for item in items {
+                totals[item.productID, default: 0] += item.monthly * discountMultiplier
+            }
+        }
+        let lines: [ProductLine] = totals.map { productID, amount in
+            ProductLine(
+                productID: productID,
+                name: productNames[productID] ?? productID,
+                amount: Money.from(amount, config.currency)
+            )
+        }
+        let sorted = lines.sorted {
+            if $0.amount.amount != $1.amount.amount {
+                return $0.amount.amount > $1.amount.amount
+            }
+            if $0.name != $1.name {
+                return $0.name < $1.name
+            }
+            return $0.productID < $1.productID
+        }
+        let limit = config.breakdownLimit
+        guard sorted.count > limit else { return sorted }
+        let kept = Array(sorted.prefix(limit))
+        let otherAmount = sorted.dropFirst(limit).reduce(0) { $0 + $1.amount.amount }
+        guard otherAmount != 0 else { return kept }
+        return kept + [ProductLine(productID: "other", name: "Other", amount: Money(otherAmount, config.currency))]
     }
 
     /// Normalizes and totals eligible subscriptions, rounding once per subscription.
