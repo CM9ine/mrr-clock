@@ -22,7 +22,10 @@ public actor RefreshCoordinator {
     private var lastGoodSnapshot: Snapshot?
     private var refreshTask: Task<Void, Never>?
 
-    public private(set) var phase: AppPhase = .idle
+    public private(set) var phase: AppPhase = .idle {
+        didSet { phaseContinuation?.yield(phase) }
+    }
+    private var phaseContinuation: AsyncStream<AppPhase>.Continuation?
 
     /// Creates the state machine with all external I/O and time supplied through the
     /// seams defined in docs/ARCHITECTURE.md.
@@ -40,6 +43,13 @@ public actor RefreshCoordinator {
         self.cache = cache
         self.clock = clock
         self.config = config
+    }
+
+    /// Streams phase changes so the app shell can republish cached and refreshed state.
+    public func phaseUpdates() -> AsyncStream<AppPhase> {
+        AsyncStream { continuation in
+            phaseContinuation = continuation
+        }
     }
 
     /// Loads the last good snapshot, publishes it, and then performs one refresh.
@@ -88,6 +98,12 @@ public actor RefreshCoordinator {
         try? cache.write(updated)
         lastGoodSnapshot = updated
         phase = .loaded(updated)
+    }
+
+    /// Pins a goal and recomputes its local progress without contacting Stripe.
+    public func pinGoal(id: UUID) async throws {
+        try goalStore.pin(id: id)
+        await recomputeGoals()
     }
 
     private func performRefresh() async {
