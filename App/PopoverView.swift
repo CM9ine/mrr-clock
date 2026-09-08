@@ -3,6 +3,10 @@ import SwiftUI
 
 struct PopoverView: View {
     @EnvironmentObject private var state: AppState
+    let goalStore: GoalStore
+    let config: Config
+    @State private var showingGoals = false
+    @State private var showingSettings = false
 
     var body: some View {
         Group {
@@ -10,9 +14,9 @@ struct PopoverView: View {
             case .idle, .loading(previous: nil):
                 ProgressView()
             case .needsSetup:
-                prompt("Add your Stripe key", systemImage: "key")
+                Button { showingSettings = true } label: { prompt("Add your Stripe key", systemImage: "key") }.buttonStyle(.plain)
             case .noGoals:
-                prompt("Add your first goal", systemImage: "flag")
+                Button { showingGoals = true } label: { prompt("Add your first goal", systemImage: "flag") }.buttonStyle(.plain)
             case .loading(previous: .some), .loaded:
                 snapshotContent(dimmed: false)
             case .stale:
@@ -21,6 +25,14 @@ struct PopoverView: View {
         }
         .padding(16)
         .frame(width: 390)
+        .sheet(isPresented: $showingGoals) {
+            NavigationStack {
+                GoalListView(store: goalStore, config: config, revenue: state.revenue ?? emptyRevenue) {
+                    Task { await state.recomputeGoals() }
+                }
+            }.frame(minWidth: 520, minHeight: 500)
+        }
+        .sheet(isPresented: $showingSettings) { SettingsView() }
     }
 
     private func prompt(_ title: String, systemImage: String) -> some View {
@@ -94,9 +106,9 @@ struct PopoverView: View {
                         Image(systemName: "arrow.clockwise")
                     }
                     .buttonStyle(.plain)
-                    Button("Goals") {}
+                    Button("Goals") { showingGoals = true }
                         .buttonStyle(.plain)
-                    Button {} label: { Image(systemName: "gearshape") }
+                    Button { showingSettings = true } label: { Image(systemName: "gearshape") }
                         .buttonStyle(.plain)
                 }
             }
@@ -139,5 +151,9 @@ struct PopoverView: View {
 
     private func bounded(_ ratio: Decimal?) -> Double {
         min(1, max(0, NSDecimalNumber(decimal: ratio ?? 0).doubleValue))
+    }
+
+    private var emptyRevenue: RevenueSnapshot {
+        RevenueSnapshot(mrr: .zero(config.currency), earnedToDate: .zero(config.currency), breakdown: [], subscriptionCount: 0, churnRisk: .zero(config.currency), warnings: [])
     }
 }

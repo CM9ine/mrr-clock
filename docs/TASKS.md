@@ -74,7 +74,7 @@ Tick here as you close them:
 - [x] [T04](https://github.com/CM9ine/mrr-clock/issues/4) · [x] [T05](https://github.com/CM9ine/mrr-clock/issues/5) · [x] [T06](https://github.com/CM9ine/mrr-clock/issues/6) · [x] [T07](https://github.com/CM9ine/mrr-clock/issues/7)
 - [x] [T08](https://github.com/CM9ine/mrr-clock/issues/8) · [x] [T09](https://github.com/CM9ine/mrr-clock/issues/9) · [x] [T10](https://github.com/CM9ine/mrr-clock/issues/10) · [x] [T11](https://github.com/CM9ine/mrr-clock/issues/11)
 - [x] [T12](https://github.com/CM9ine/mrr-clock/issues/12) · [x] [T13](https://github.com/CM9ine/mrr-clock/issues/13) · [x] [T14](https://github.com/CM9ine/mrr-clock/issues/14) · [x] [T15](https://github.com/CM9ine/mrr-clock/issues/15)
-- [x] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [ ] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
+- [x] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [x] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
 - [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
 - [x] [T20](https://github.com/CM9ine/mrr-clock/issues/20)
 

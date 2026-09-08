@@ -4,11 +4,15 @@ import SwiftUI
 @main
 struct MRRClockApp: App {
     @StateObject private var state: AppState
+    private let goals: GoalStore
+    private let config: Config
 
     init() {
         let clock = SystemClock()
-        let config = Config.default
+        let config = StoredSettings.config
         let goals = GoalStore(storage: FileGoalStore(), clock: clock, config: config)
+        self.config = config
+        self.goals = goals
         let coordinator = RefreshCoordinator(
             api: { key in LiveStripeClient(key: key, transport: URLSessionTransport()) },
             keyStore: KeychainKeyStore(),
@@ -26,7 +30,7 @@ struct MRRClockApp: App {
 
     var body: some Scene {
         MenuBarExtra(state.title) {
-            PopoverView()
+            PopoverView(goalStore: goals, config: config)
                 .environmentObject(state)
                 .task { await state.start() }
         }

@@ -87,6 +87,13 @@ public final class AppState: ObservableObject {
         publish(await coordinator.phase)
     }
 
+    /// Recomputes edited goals from cached revenue without contacting Stripe.
+    public func recomputeGoals() async {
+        guard let coordinator else { return }
+        await coordinator.recomputeGoals()
+        publish(await coordinator.phase)
+    }
+
     public func moneyLabel(_ money: Money) -> String { formatter.compactMoney(money) }
     public func daysLabel(_ days: Int) -> String { formatter.daysLabel(days) }
     public func percentLabel(_ ratio: Decimal?) -> String { formatter.percentLabel(ratio) }
