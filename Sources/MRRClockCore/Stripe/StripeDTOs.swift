@@ -12,13 +12,13 @@ public enum StripeJSON {
 }
 
 /// A Stripe list envelope, including its pagination marker.
-public struct StripeList<Element: Decodable>: Decodable {
+public struct StripeList<Element: Decodable & Sendable>: Decodable, Sendable {
     public let data: [Element]
     public let hasMore: Bool
 }
 
 /// The subscription fields needed by the MRR rules in docs/METRICS.md.
-public struct Subscription: Decodable {
+public struct Subscription: Decodable, Sendable {
     public let id: String
     public let status: String
     public let currency: String
@@ -28,20 +28,20 @@ public struct Subscription: Decodable {
 }
 
 /// Embedded subscription items and their pagination marker.
-public struct SubscriptionItems: Decodable {
+public struct SubscriptionItems: Decodable, Sendable {
     public let data: [SubscriptionItem]
     public let hasMore: Bool
 }
 
 /// A quantity and price attached to a subscription.
-public struct SubscriptionItem: Decodable {
+public struct SubscriptionItem: Decodable, Sendable {
     public let id: String
     public let quantity: Int
     public let price: Price
 }
 
 /// Stripe price fields needed to identify recurring revenue in docs/METRICS.md.
-public struct Price: Decodable {
+public struct Price: Decodable, Sendable {
     public let id: String
     public let product: String
     public let currency: String
@@ -51,14 +51,14 @@ public struct Price: Decodable {
 }
 
 /// The cadence and usage mode of a recurring Stripe price.
-public struct Recurring: Decodable {
+public struct Recurring: Decodable, Sendable {
     public let interval: Interval
     public let intervalCount: Int
     public let usageType: String
 }
 
 /// Supported Stripe billing intervals, preserving forward compatibility.
-public enum Interval: String, Decodable {
+public enum Interval: String, Decodable, Sendable {
     case day, week, month, year, unknown
 
     public init(from decoder: Decoder) throws {
@@ -68,20 +68,20 @@ public enum Interval: String, Decodable {
 }
 
 /// A subscription-level discount used by docs/METRICS.md § Discounts.
-public struct Discount: Decodable {
+public struct Discount: Decodable, Sendable {
     public let coupon: Coupon
     public let end: Date?
 }
 
 /// Stripe coupon values used by docs/METRICS.md § Discounts.
-public struct Coupon: Decodable {
+public struct Coupon: Decodable, Sendable {
     public let percentOff: Decimal?
     public let amountOff: Int?
     public let duration: String
 }
 
 /// A net Stripe ledger entry used by docs/METRICS.md § Earned to date.
-public struct BalanceTransaction: Decodable {
+public struct BalanceTransaction: Decodable, Sendable {
     public let id: String
     public let type: String
     public let net: Int
@@ -90,7 +90,7 @@ public struct BalanceTransaction: Decodable {
 }
 
 /// A Stripe product name used for the MRR breakdown in docs/METRICS.md.
-public struct Product: Decodable {
+public struct Product: Decodable, Sendable {
     public let id: String
     public let name: String
 }
