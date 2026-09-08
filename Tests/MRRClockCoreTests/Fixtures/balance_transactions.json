@@ -1,0 +1,9 @@
+{
+  "object": "list",
+  "has_more": false,
+  "data": [
+    {"id": "txn_test_charge", "type": "charge", "net": 925, "currency": "usd", "created": 1700000000},
+    {"id": "txn_test_refund", "type": "refund", "net": -500, "currency": "usd", "created": 1700000100},
+    {"id": "txn_test_payout", "type": "payout", "net": -425, "currency": "usd", "created": 1700000200}
+  ]
+}

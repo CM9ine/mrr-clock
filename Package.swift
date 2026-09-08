@@ -9,6 +9,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "MRRClockCore"),
-        .testTarget(name: "MRRClockCoreTests", dependencies: ["MRRClockCore"])
+        .testTarget(
+            name: "MRRClockCoreTests",
+            dependencies: ["MRRClockCore"],
+            resources: [.process("Fixtures")]
+        )
     ]
 )
