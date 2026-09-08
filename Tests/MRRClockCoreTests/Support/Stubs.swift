@@ -124,3 +124,7 @@ extension Product {
         Self(id: id, name: name)
     }
 }
+
+extension Config {
+    static var test: Self { Self(currency: "usd", includeTrials: false) }
+}
