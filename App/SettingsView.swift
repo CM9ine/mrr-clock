@@ -15,6 +15,7 @@ import SwiftUI
 }
 
 struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var key = ""
     @State private var savedKey: String?
     @State private var verification: KeyVerification?
@@ -49,6 +50,17 @@ struct SettingsView: View {
             }
             Toggle("Include trials", isOn: $includeTrials)
             Toggle("Launch at login (available in T18)", isOn: .constant(false)).disabled(true)
+        }
+        .safeAreaInset(edge: .top) {
+            HStack {
+                Text("Settings").font(.headline)
+                Spacer()
+                Button("Done") { dismiss() }
+                    .keyboardShortcut(.cancelAction)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .background(.bar)
         }
         .formStyle(.grouped).frame(width: 460, height: 520)
         .task { savedKey = try? keyStore.read() }
