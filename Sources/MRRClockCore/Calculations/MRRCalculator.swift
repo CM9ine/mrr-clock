@@ -26,7 +26,7 @@ public struct MRRResult: Equatable, Sendable {
 }
 
 /// One rounded product contribution to MRR (METRICS.md § Breakdown by product).
-public struct ProductLine: Equatable, Sendable {
+public struct ProductLine: Equatable, Codable, Sendable {
     public let productID: String
     public let name: String
     public let amount: Money
