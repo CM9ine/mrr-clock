@@ -24,7 +24,7 @@ public enum GoalStoreError: Error, Equatable {
 }
 
 /// CRUD, ordering, pinning, and immediate persistence for docs/METRICS.md § Goal.
-public final class GoalStore {
+public final class GoalStore: @unchecked Sendable {
     private let storage: any GoalStorage
     private let clock: any Clock
     private let config: Config
