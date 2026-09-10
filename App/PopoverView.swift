@@ -1,3 +1,4 @@
+import AppKit
 import MRRClockCore
 import SwiftUI
 
@@ -11,9 +12,9 @@ struct PopoverView: View {
             case .idle, .loading(previous: nil):
                 ProgressView()
             case .needsSetup:
-                Button { openWindow(id: "settings") } label: { prompt("Add your Stripe key", systemImage: "key") }.buttonStyle(.plain)
+                Button { showWindow("settings") } label: { prompt("Add your Stripe key", systemImage: "key") }.buttonStyle(.plain)
             case .noGoals:
-                Button { openWindow(id: "goals") } label: { prompt("Add your first goal", systemImage: "flag") }.buttonStyle(.plain)
+                Button { showWindow("goals") } label: { prompt("Add your first goal", systemImage: "flag") }.buttonStyle(.plain)
             case .loading(previous: .some), .loaded:
                 snapshotContent(dimmed: false)
             case .stale:
@@ -95,9 +96,9 @@ struct PopoverView: View {
                         Image(systemName: "arrow.clockwise")
                     }
                     .buttonStyle(.plain)
-                    Button("Goals") { openWindow(id: "goals") }
+                    Button("Goals") { showWindow("goals") }
                         .buttonStyle(.plain)
-                    Button { openWindow(id: "settings") } label: { Image(systemName: "gearshape") }
+                    Button { showWindow("settings") } label: { Image(systemName: "gearshape") }
                         .buttonStyle(.plain)
                 }
             }
@@ -140,5 +141,10 @@ struct PopoverView: View {
 
     private func bounded(_ ratio: Decimal?) -> Double {
         min(1, max(0, NSDecimalNumber(decimal: ratio ?? 0).doubleValue))
+    }
+
+    private func showWindow(_ id: String) {
+        openWindow(id: id)
+        NSApp.activate(ignoringOtherApps: true)
     }
 }
