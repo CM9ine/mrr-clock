@@ -1,6 +1,6 @@
 # T18 · Auto-refresh scheduling and launch at login
 
-**Depends on:** T17, T21 · **Milestone:** M5
+**Depends on:** T17, T21, T22, T23 · **Milestone:** M5
 
 ## Goal
 

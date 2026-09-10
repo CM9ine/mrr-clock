@@ -1,9 +1,10 @@
 # Task list
 
-21 tasks: 19 product tasks, one tooling follow-up, and one UI regression gate. Each is one focused session: read the task file, read the docs it names, write
+23 tasks: 19 product tasks, one tooling follow-up, one UI regression gate, and two T17 acceptance blockers. Each is one focused session: read the task file, read the docs it names, write
 the tests, make them pass. Rules in [TDD.md](TDD.md). Numbers in [METRICS.md](METRICS.md).
 
-Work T01–T17, then T21, then T18–T19. T18 is blocked by the T21 UI regression gate.
+Work T01–T17, then T21, then the T22–T23 acceptance blockers, then T18–T19.
+T18 is blocked until T21–T23 are closed.
 T20 is an independently assignable foundation follow-up; it may be worked now. To hand one to an agent, use
 the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task itself.
 
@@ -48,7 +49,7 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 | --- | --- | --- | --- | --- |
 | T16 | Xcode shell, `MenuBarExtra`, popover | T14, T15 | [T16](tasks/T16-app-shell.md) | [#16](https://github.com/CM9ine/mrr-clock/issues/16) |
 | T17 | Goals UI and Settings | T16 | [T17](tasks/T17-goals-settings-ui.md) | [#17](https://github.com/CM9ine/mrr-clock/issues/17) |
-| T18 | Auto-refresh scheduling and launch at login | T17, T21 | [T18](tasks/T18-scheduling-launch.md) | [#18](https://github.com/CM9ine/mrr-clock/issues/18) |
+| T18 | Auto-refresh scheduling and launch at login | T17, T21, T22, T23 | [T18](tasks/T18-scheduling-launch.md) | [#18](https://github.com/CM9ine/mrr-clock/issues/18) |
 
 ## M6 · Ship
 
@@ -71,13 +72,23 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 Assign T21 explicitly: the default lowest-open-issue prompt selects T18, whose brief now
 correctly stops on the open T21 dependency.
 
+## T17 acceptance blockers · M5
+
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T22 | Goal drag reordering regression | T17, T21 | [T22](tasks/T22-goal-drag-reordering.md) | [#22](https://github.com/CM9ine/mrr-clock/issues/22) |
+| T23 | Restore inspectable Application Support storage | T12, T13, T21 | [T23](tasks/T23-storage-location-contract.md) | [#23](https://github.com/CM9ine/mrr-clock/issues/23) |
+
+Work T22 and T23 before T18. The default lowest-open-issue prompt selects T18, so assign
+the blocker explicitly until both are closed.
+
 Assign T20 explicitly to an agent: the default lowest-open-issue prompt still selects
 T04 while it remains open. T20 does not block the existing product sequence.
 
 ---
 
 ## Progress
-Tracked as issues [#1–#20](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones.
+Tracked as issues [#1–#23](https://github.com/CM9ine/mrr-clock/issues), grouped into six milestones plus focused follow-ups.
 Tick here as you close them:
 - [x] [T01](https://github.com/CM9ine/mrr-clock/issues/1) · [x] [T02](https://github.com/CM9ine/mrr-clock/issues/2) · [x] [T03](https://github.com/CM9ine/mrr-clock/issues/3)
 - [x] [T04](https://github.com/CM9ine/mrr-clock/issues/4) · [x] [T05](https://github.com/CM9ine/mrr-clock/issues/5) · [x] [T06](https://github.com/CM9ine/mrr-clock/issues/6) · [x] [T07](https://github.com/CM9ine/mrr-clock/issues/7)
@@ -87,6 +98,7 @@ Tick here as you close them:
 - [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
 - [x] [T20](https://github.com/CM9ine/mrr-clock/issues/20)
 - [x] [T21](https://github.com/CM9ine/mrr-clock/issues/21)
+- [ ] [T22](https://github.com/CM9ine/mrr-clock/issues/22) · [ ] [T23](https://github.com/CM9ine/mrr-clock/issues/23)
 
 ## Notes on sequencing
 
