@@ -1,4 +1,5 @@
 import MRRClockCore
+import ServiceManagement
 import SwiftUI
 
 @MainActor enum StoredSettings {
@@ -25,10 +26,13 @@ struct SettingsView: View {
     @AppStorage("refreshInterval") private var refreshInterval = 900.0
     @AppStorage("titleFormat") private var titleFormat = TitleFormat.daysAndMRR.rawValue
     @AppStorage("includeTrials") private var includeTrials = false
+    @State private var launchAtLogin = false
     private let keyStore: any KeyStore
+    private let intervalChanged: (TimeInterval) -> Void
 
-    init(keyStore: any KeyStore = KeychainKeyStore()) {
+    init(keyStore: any KeyStore = KeychainKeyStore(), intervalChanged: @escaping (TimeInterval) -> Void = { _ in }) {
         self.keyStore = keyStore
+        self.intervalChanged = intervalChanged
     }
 
     var body: some View {
@@ -47,6 +51,7 @@ struct SettingsView: View {
                 .accessibilityIdentifier("mrrclock.settings-earnings-start")
             Stepper("Monthly growth assumption: \(growth, specifier: "%.0f")%", value: $growth, in: -100...100, step: 1)
             Picker("Refresh interval", selection: $refreshInterval) { Text("5 minutes").tag(300.0); Text("15 minutes").tag(900.0); Text("30 minutes").tag(1800.0); Text("1 hour").tag(3600.0) }
+                .onChange(of: refreshInterval) { _, value in intervalChanged(value) }
             Picker("Menu bar title", selection: $titleFormat) {
                 Text("387d · $4.2k MRR").tag(TitleFormat.daysAndMRR.rawValue)
                 Text("387d").tag(TitleFormat.daysOnly.rawValue)
@@ -55,7 +60,10 @@ struct SettingsView: View {
             }
             Toggle("Include trials", isOn: $includeTrials)
                 .accessibilityIdentifier("mrrclock.settings-include-trials")
-            Toggle("Launch at login (available in T18)", isOn: .constant(false)).disabled(true)
+            Toggle("Launch at login", isOn: Binding(
+                get: { launchAtLogin },
+                set: { enabled in updateLaunchAtLogin(enabled) }
+            ))
         }
         .safeAreaInset(edge: .top) {
             HStack {
@@ -69,7 +77,10 @@ struct SettingsView: View {
             .background(.bar)
         }
         .formStyle(.grouped).frame(width: 460, height: 520)
-        .task { savedKey = try? keyStore.read() }
+        .task {
+            savedKey = try? keyStore.read()
+            launchAtLogin = SMAppService.mainApp.status == .enabled
+        }
     }
 
     private func verify() {
@@ -78,5 +89,13 @@ struct SettingsView: View {
             let result = await KeyVerifier().verify(key, api: LiveStripeClient(key: key, transport: URLSessionTransport()), keyStore: keyStore)
             await MainActor.run { verification = result; verifying = false; if result == .verified { savedKey = key; key = "" } }
         }
+    }
+
+    private func updateLaunchAtLogin(_ enabled: Bool) {
+        do {
+            if enabled { try SMAppService.mainApp.register() }
+            else { try SMAppService.mainApp.unregister() }
+        } catch {}
+        launchAtLogin = SMAppService.mainApp.status == .enabled
     }
 }

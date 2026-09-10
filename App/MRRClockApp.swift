@@ -1,4 +1,5 @@
 import MRRClockCore
+import Network
 import SwiftUI
 
 @main
@@ -7,12 +8,15 @@ struct MRRClockApp: App {
     private let goals: GoalStore
     private let config: Config
     private let settingsKeyStore: any KeyStore
+    private let scheduler: RefreshScheduler?
+    @StateObject private var systemEvents = SystemEventMonitor()
 
     init() {
         let dependencies = AppDependencies.make()
         config = dependencies.config
         goals = dependencies.goals
         settingsKeyStore = dependencies.keyStore
+        scheduler = dependencies.scheduler
         _state = StateObject(wrappedValue: dependencies.state)
     }
 
@@ -20,7 +24,10 @@ struct MRRClockApp: App {
         MenuBarExtra {
             PopoverView()
                 .environmentObject(state)
-                .task { await state.start() }
+                .task {
+                    systemEvents.start(scheduler: scheduler)
+                    await state.start()
+                }
         } label: {
             Text(state.title)
                 .accessibilityIdentifier("mrrclock.menu-bar-item")
@@ -39,7 +46,9 @@ struct MRRClockApp: App {
         .defaultSize(width: 560, height: 560)
 
         Window("Settings", id: "settings") {
-            SettingsView(keyStore: settingsKeyStore)
+            SettingsView(keyStore: settingsKeyStore) { interval in
+                Task { await scheduler?.intervalChanged(to: interval) }
+            }
         }
         .defaultSize(width: 460, height: 520)
     }
@@ -55,6 +64,7 @@ private struct AppDependencies {
     let goals: GoalStore
     let state: AppState
     let keyStore: any KeyStore
+    let scheduler: RefreshScheduler?
 
     static func make() -> AppDependencies {
         let arguments = ProcessInfo.processInfo.arguments
@@ -102,7 +112,7 @@ private struct AppDependencies {
         } else {
             state.publish(.noGoals)
         }
-        return AppDependencies(config: config, goals: goals, state: state, keyStore: InMemoryKeyStore())
+        return AppDependencies(config: config, goals: goals, state: state, keyStore: InMemoryKeyStore(), scheduler: nil)
     }
 
     private static func live() -> AppDependencies {
@@ -119,11 +129,18 @@ private struct AppDependencies {
             clock: clock,
             config: config
         )
+        let scheduler = RefreshScheduler(
+            coordinator: coordinator,
+            driver: FoundationTimerDriver(),
+            clock: clock,
+            config: config
+        )
         return AppDependencies(
             config: config,
             goals: goals,
-            state: AppState(coordinator: coordinator, titleFormat: config.titleFormat, clock: clock),
-            keyStore: KeychainKeyStore()
+            state: AppState(coordinator: coordinator, scheduler: scheduler, titleFormat: config.titleFormat, clock: clock),
+            keyStore: KeychainKeyStore(),
+            scheduler: scheduler
         )
     }
 
@@ -149,4 +166,58 @@ private struct AppDependencies {
             )
         }
     }
+}
+
+private final class FoundationTimerDriver: SchedulerDriver, @unchecked Sendable {
+    private let lock = NSLock()
+    private var timer: Timer?
+
+    func schedule(after delay: TimeInterval, _ work: @escaping @Sendable () async -> Void) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.lock.withLock {
+                self.timer?.invalidate()
+                self.timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
+                    Task { await work() }
+                }
+            }
+        }
+    }
+
+    func cancel() {
+        DispatchQueue.main.async { [weak self] in
+            self?.lock.withLock {
+                self?.timer?.invalidate()
+                self?.timer = nil
+            }
+        }
+    }
+}
+
+@MainActor
+private final class SystemEventMonitor: ObservableObject {
+    private let network = NWPathMonitor()
+    private var wakeObserver: NSObjectProtocol?
+    private var started = false
+    private var previousNetworkAvailable: Bool?
+
+    func start(scheduler: RefreshScheduler?) {
+        guard !started, let scheduler else { return }
+        started = true
+        wakeObserver = NotificationCenter.default.addObserver(
+            forName: NSWorkspace.didWakeNotification,
+            object: nil,
+            queue: .main
+        ) { _ in Task { await scheduler.systemDidWake() } }
+        network.pathUpdateHandler = { [weak self] path in
+            let available = path.status == .satisfied
+            Task { @MainActor [weak self] in
+                let returned = self?.previousNetworkAvailable == false && available
+                self?.previousNetworkAvailable = available
+                if returned { await scheduler.networkDidReturn() }
+            }
+        }
+        network.start(queue: DispatchQueue(label: "com.mrrclock.network-monitor"))
+    }
+
 }

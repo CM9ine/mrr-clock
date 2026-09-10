@@ -7,17 +7,20 @@ public final class AppState: ObservableObject {
     @Published public private(set) var phase: AppPhase = .idle
 
     private let coordinator: RefreshCoordinator?
+    private let scheduler: RefreshScheduler?
     private let formatter: MenuBarFormatter
     private let titleFormat: TitleFormat
     private let clock: any Clock
 
     public init(
         coordinator: RefreshCoordinator? = nil,
+        scheduler: RefreshScheduler? = nil,
         formatter: MenuBarFormatter = MenuBarFormatter(),
         titleFormat: TitleFormat = .daysAndMRR,
         clock: any Clock = SystemClock()
     ) {
         self.coordinator = coordinator
+        self.scheduler = scheduler
         self.formatter = formatter
         self.titleFormat = titleFormat
         self.clock = clock
@@ -60,10 +63,13 @@ public final class AppState: ObservableObject {
     public func start() async {
         guard let coordinator else { return }
         let updates = await coordinator.phaseUpdates()
-        let task = Task { await coordinator.start() }
+        let task = Task {
+            if let scheduler { await scheduler.start() }
+            else { await coordinator.start() }
+        }
         for await update in updates {
             publish(update)
-            if update.isSettled { break }
+            if scheduler == nil, update.isSettled { break }
         }
         await task.value
     }
@@ -71,6 +77,11 @@ public final class AppState: ObservableObject {
     /// Performs a user-requested refresh and republishes its resulting phase.
     public func refresh() async {
         guard let coordinator else { return }
+        if scheduler != nil {
+            await coordinator.refresh()
+            publish(await coordinator.phase)
+            return
+        }
         let updates = await coordinator.phaseUpdates()
         let task = Task { await coordinator.refresh() }
         for await update in updates {
