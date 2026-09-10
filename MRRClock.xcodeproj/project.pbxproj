@@ -14,6 +14,7 @@
 		A10000000000000000000006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* SettingsView.swift */; };
 		A10000000000000000000003 /* MRRClockCore in Frameworks */ = {isa = PBXBuildFile; productRef = A70000000000000000000001 /* MRRClockCore */; };
 		B10000000000000000000001 /* SetupWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* SetupWindowTests.swift */; };
+		B10000000000000000000002 /* GoalReorderingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000003 /* GoalReorderingUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		A20000000000000000000008 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* SetupWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWindowTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000002 /* MRRClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MRRClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20000000000000000000003 /* GoalReorderingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalReorderingUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				B20000000000000000000001 /* SetupWindowTests.swift */,
+				B20000000000000000000003 /* GoalReorderingUITests.swift */,
 			);
 			path = MRRClockUITests;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B10000000000000000000001 /* SetupWindowTests.swift in Sources */,
+				B10000000000000000000002 /* GoalReorderingUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

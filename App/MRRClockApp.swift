@@ -62,7 +62,8 @@ private struct AppDependencies {
 
         let clock = FixedClock(at: Date(timeIntervalSince1970: 1_800_000_000))
         let config = Config(earningsStartDate: Date(timeIntervalSince1970: 1_700_000_000))
-        let loaded = uiTestState(in: arguments) == "loaded"
+        let testState = uiTestState(in: arguments)
+        let loaded = testState == "loaded" || testState == "reordering"
         let goal = Goal(
             id: UUID(uuidString: "21000000-0000-0000-0000-000000000001")!,
             name: "Launch goal",
@@ -71,8 +72,20 @@ private struct AppDependencies {
             createdAt: Date(timeIntervalSince1970: 1_700_000_000),
             sortIndex: 0
         )
-        let file = loaded ? GoalFile(goals: [goal], pinnedGoalID: goal.id) : GoalFile()
-        let goals = GoalStore(storage: InMemoryGoalStore(file: file), clock: clock, config: config)
+        let seededGoals = testState == "reordering" ? reorderingGoals() : [goal]
+        let file = loaded ? GoalFile(goals: seededGoals, pinnedGoalID: seededGoals.first?.id) : GoalFile()
+        let goalStorage: any GoalStorage
+        if testState == "reordering", let directory = uiTestGoalStoreDirectory(in: arguments) {
+            let storage = FileGoalStore(directory: directory)
+            let goalFile = directory.appendingPathComponent("goals.json")
+            if !FileManager.default.fileExists(atPath: goalFile.path) {
+                try? storage.save(file)
+            }
+            goalStorage = storage
+        } else {
+            goalStorage = InMemoryGoalStore(file: file)
+        }
+        let goals = GoalStore(storage: goalStorage, clock: clock, config: config)
         let state = AppState(titleFormat: config.titleFormat, clock: clock)
         if loaded {
             let snapshot = SnapshotBuilder(clock: clock).build(
@@ -81,8 +94,8 @@ private struct AppDependencies {
                     earned: EarningsCalculator().earned(transactions: [], config: config),
                     breakdown: []
                 ),
-                goals: [goal],
-                pinnedGoalID: goal.id,
+                goals: goals.goals,
+                pinnedGoalID: goals.pinned?.id,
                 config: config
             )
             state.publish(.loaded(snapshot))
@@ -115,5 +128,23 @@ private struct AppDependencies {
     private static func uiTestState(in arguments: [String]) -> String? {
         guard let index = arguments.firstIndex(of: "--ui-test-state"), arguments.indices.contains(index + 1) else { return nil }
         return arguments[index + 1]
+    }
+
+    private static func uiTestGoalStoreDirectory(in arguments: [String]) -> URL? {
+        guard let index = arguments.firstIndex(of: "--ui-test-goal-store"), arguments.indices.contains(index + 1) else { return nil }
+        return URL(fileURLWithPath: arguments[index + 1], isDirectory: true)
+    }
+
+    private static func reorderingGoals() -> [Goal] {
+        ["Alpha", "Beta", "Gamma"].enumerated().map { index, name in
+            Goal(
+                id: UUID(uuidString: "21000000-0000-0000-0000-00000000000\(index + 1)")!,
+                name: name,
+                targetDate: Date(timeIntervalSince1970: 1_803_456_000),
+                targetAmount: nil,
+                createdAt: Date(timeIntervalSince1970: 1_700_000_000),
+                sortIndex: index
+            )
+        }
     }
 }

@@ -1,5 +1,6 @@
 import MRRClockCore
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct GoalListView: View {
     let store: GoalStore
@@ -10,6 +11,7 @@ struct GoalListView: View {
     @State private var editing: Goal?
     @State private var adding = false
     @State private var pendingDelete: Goal?
+    @State private var draggedGoalID: UUID?
 
     var body: some View {
         List {
@@ -17,7 +19,11 @@ struct GoalListView: View {
                 HStack {
                     Button { try? store.pin(id: goal.id); reload() } label: {
                         Image(systemName: store.pinned?.id == goal.id ? "pin.fill" : "pin")
-                    }.buttonStyle(.plain)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Pin \(goal.name)")
+                    .accessibilityValue(store.pinned?.id == goal.id ? "pinned" : "not pinned")
+                    .accessibilityIdentifier("mrrclock.goal-pin.\(goal.id.uuidString)")
                     VStack(alignment: .leading) {
                         Text(goal.name)
                         Text(daysLabel(goal.targetDate)).foregroundStyle(.secondary)
@@ -26,6 +32,23 @@ struct GoalListView: View {
                     Text(goal.targetDate, style: .date).foregroundStyle(.secondary)
                 }
                 .contentShape(Rectangle())
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel(goal.name)
+                .accessibilityIdentifier("mrrclock.goal-row.\(goal.id.uuidString)")
+                .onDrag {
+                    draggedGoalID = goal.id
+                    return NSItemProvider(object: goal.id.uuidString as NSString)
+                }
+                .onDrop(
+                    of: [UTType.text],
+                    delegate: GoalRowDropDelegate(
+                        destination: goal,
+                        draggedGoalID: $draggedGoalID,
+                        goals: goals,
+                        store: store,
+                        reload: reload
+                    )
+                )
                 .onTapGesture { editing = goal }
                 .swipeActions { Button("Delete", role: .destructive) { pendingDelete = goal } }
             }
@@ -59,5 +82,30 @@ struct GoalListView: View {
         if days < 0 { return "\(-days) days overdue" }
         if days == 0 { return "today" }
         return "\(days) days remaining"
+    }
+}
+
+private struct GoalRowDropDelegate: DropDelegate {
+    let destination: Goal
+    @Binding var draggedGoalID: UUID?
+    let goals: [Goal]
+    let store: GoalStore
+    let reload: () -> Void
+
+    func performDrop(info: DropInfo) -> Bool {
+        guard
+            let sourceID = draggedGoalID,
+            let source = goals.firstIndex(where: { $0.id == sourceID }),
+            let target = goals.firstIndex(where: { $0.id == destination.id }),
+            source != target
+        else { return false }
+        do {
+            try store.move(from: IndexSet(integer: source), to: target)
+            reload()
+        } catch {
+            return false
+        }
+        draggedGoalID = nil
+        return true
     }
 }
