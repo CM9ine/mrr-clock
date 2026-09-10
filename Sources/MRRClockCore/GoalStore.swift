@@ -117,8 +117,11 @@ public final class InMemoryGoalStore: GoalStorage, @unchecked Sendable {
 public struct FileGoalStore: GoalStorage {
     private let directory: URL
 
-    public init(directory: URL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("MRRClock", isDirectory: true)) {
+    public init(locations: StorageLocations) {
+        directory = locations.directory
+    }
+
+    public init(directory: URL) {
         self.directory = directory
     }
 

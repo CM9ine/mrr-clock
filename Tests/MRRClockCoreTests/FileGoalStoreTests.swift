@@ -9,6 +9,17 @@ struct FileGoalStoreTests {
         return url
     }
 
+    @Test("goal store uses the injected storage directory")
+    func usesInjectedStorageDirectory() throws {
+        let root = try directory(); defer { try? FileManager.default.removeItem(at: root) }
+        let locations = StorageLocations(applicationSupportDirectory: root)
+
+        try FileGoalStore(locations: locations).save(GoalFile())
+
+        #expect(FileManager.default.fileExists(atPath: root.appendingPathComponent("MRRClock/goals.json").path))
+        #expect(!FileManager.default.fileExists(atPath: root.appendingPathComponent("goals.json").path))
+    }
+
     @Test("creates the file on first save")
     func createsFile() throws {
         let url = try directory(); defer { try? FileManager.default.removeItem(at: url) }

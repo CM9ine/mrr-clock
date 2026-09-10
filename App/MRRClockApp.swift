@@ -108,12 +108,14 @@ private struct AppDependencies {
     private static func live() -> AppDependencies {
         let clock = SystemClock()
         let config = StoredSettings.config
-        let goals = GoalStore(storage: FileGoalStore(), clock: clock, config: config)
+        let storageLocations = StorageLocations(homeDirectory: FileManager.default.homeDirectoryForCurrentUser)
+        try? StorageMigrator(locations: storageLocations).migrate()
+        let goals = GoalStore(storage: FileGoalStore(locations: storageLocations), clock: clock, config: config)
         let coordinator = RefreshCoordinator(
             api: { key in LiveStripeClient(key: key, transport: URLSessionTransport()) },
             keyStore: KeychainKeyStore(),
             goalStore: goals,
-            cache: FileSnapshotCache(),
+            cache: FileSnapshotCache(locations: storageLocations),
             clock: clock,
             config: config
         )

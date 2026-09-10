@@ -38,6 +38,18 @@ struct SnapshotCacheTests {
         )
     }
 
+    @Test("snapshot cache uses the injected storage directory")
+    func usesInjectedStorageDirectory() throws {
+        let root = try directory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let locations = StorageLocations(applicationSupportDirectory: root)
+
+        try FileSnapshotCache(locations: locations).write(snapshot())
+
+        #expect(FileManager.default.fileExists(atPath: root.appendingPathComponent("MRRClock/snapshot.json").path))
+        #expect(!FileManager.default.fileExists(atPath: root.appendingPathComponent("snapshot.json").path))
+    }
+
     @Test("returns nil when nothing is cached")
     func missingCache() throws {
         let url = try directory()
