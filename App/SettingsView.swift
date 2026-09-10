@@ -25,7 +25,11 @@ struct SettingsView: View {
     @AppStorage("refreshInterval") private var refreshInterval = 900.0
     @AppStorage("titleFormat") private var titleFormat = TitleFormat.daysAndMRR.rawValue
     @AppStorage("includeTrials") private var includeTrials = false
-    private let keyStore = KeychainKeyStore()
+    private let keyStore: any KeyStore
+
+    init(keyStore: any KeyStore = KeychainKeyStore()) {
+        self.keyStore = keyStore
+    }
 
     var body: some View {
         Form {
@@ -40,6 +44,7 @@ struct SettingsView: View {
                 }
             }
             DatePicker("Earnings start date", selection: Binding(get: { Date(timeIntervalSince1970: earningsStartDate) }, set: { earningsStartDate = $0.timeIntervalSince1970 }), displayedComponents: .date)
+                .accessibilityIdentifier("mrrclock.settings-earnings-start")
             Stepper("Monthly growth assumption: \(growth, specifier: "%.0f")%", value: $growth, in: -100...100, step: 1)
             Picker("Refresh interval", selection: $refreshInterval) { Text("5 minutes").tag(300.0); Text("15 minutes").tag(900.0); Text("30 minutes").tag(1800.0); Text("1 hour").tag(3600.0) }
             Picker("Menu bar title", selection: $titleFormat) {
@@ -49,6 +54,7 @@ struct SettingsView: View {
                 Text("62% · 387d").tag(TitleFormat.percentAndDays.rawValue)
             }
             Toggle("Include trials", isOn: $includeTrials)
+                .accessibilityIdentifier("mrrclock.settings-include-trials")
             Toggle("Launch at login (available in T18)", isOn: .constant(false)).disabled(true)
         }
         .safeAreaInset(edge: .top) {

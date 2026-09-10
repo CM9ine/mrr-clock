@@ -4,6 +4,7 @@ import SwiftUI
 struct GoalEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var model: GoalEditorModel
+    @FocusState private var isNameFocused: Bool
     let onSave: (String, Date, Money?) throws -> Void
 
     init(goal: Goal? = nil, config: Config, revenue: RevenueSnapshot, clock: any Clock = SystemClock(), onSave: @escaping (String, Date, Money?) throws -> Void) {
@@ -14,6 +15,8 @@ struct GoalEditorView: View {
     var body: some View {
         Form {
             TextField("Name", text: $model.name)
+                .accessibilityIdentifier("mrrclock.goal-name")
+                .focused($isNameFocused)
             if model.targetDate == nil {
                 Button("Choose target date") { model.targetDate = Calendar.current.startOfDay(for: SystemClock().now) }
             } else {
@@ -42,8 +45,11 @@ struct GoalEditorView: View {
                     guard let date = model.targetDate else { return }
                     try? onSave(model.name, date, model.targetAmount)
                     dismiss()
-                }.disabled(!model.canSave)
+                }
+                .disabled(!model.canSave)
+                .accessibilityIdentifier("mrrclock.goal-save")
             }
         }
+        .onAppear { isNameFocused = true }
     }
 }

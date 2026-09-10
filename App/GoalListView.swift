@@ -33,7 +33,10 @@ struct GoalListView: View {
             .onDelete { offsets in if let first = offsets.first { pendingDelete = goals[first] } }
         }
         .navigationTitle("Goals")
-        .toolbar { Button { adding = true } label: { Image(systemName: "plus") } }
+        .toolbar {
+            Button { adding = true } label: { Image(systemName: "plus") }
+                .accessibilityIdentifier("mrrclock.add-goal")
+        }
         .onAppear(perform: reload)
         .sheet(isPresented: $adding) { NavigationStack { editor(nil) } }
         .sheet(item: $editing) { goal in NavigationStack { editor(goal) } }

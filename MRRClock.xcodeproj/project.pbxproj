@@ -1,18 +1,30 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
+	classes = {
+	};
 	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* MRRClockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* MRRClockApp.swift */; };
 		A10000000000000000000002 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* PopoverView.swift */; };
-		A10000000000000000000003 /* MRRClockCore in Frameworks */ = {isa = PBXBuildFile; productRef = A70000000000000000000001 /* MRRClockCore */; };
 		A10000000000000000000004 /* GoalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* GoalListView.swift */; };
 		A10000000000000000000005 /* GoalEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* GoalEditorView.swift */; };
 		A10000000000000000000006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* SettingsView.swift */; };
+		A10000000000000000000003 /* MRRClockCore in Frameworks */ = {isa = PBXBuildFile; productRef = A70000000000000000000001 /* MRRClockCore */; };
+		B10000000000000000000001 /* SetupWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* SetupWindowTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B60000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A60000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A50000000000000000000001;
+			remoteInfo = MRRClock;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		A20000000000000000000001 /* MRRClockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRRClockApp.swift; sourceTree = "<group>"; };
@@ -23,52 +35,350 @@
 		A20000000000000000000006 /* GoalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalListView.swift; sourceTree = "<group>"; };
 		A20000000000000000000007 /* GoalEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditorView.swift; sourceTree = "<group>"; };
 		A20000000000000000000008 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B20000000000000000000001 /* SetupWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWindowTests.swift; sourceTree = "<group>"; };
+		B20000000000000000000002 /* MRRClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MRRClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A30000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000003 /* MRRClockCore in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
+		A30000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000003 /* MRRClockCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A40000000000000000000001 = {isa = PBXGroup; children = (A40000000000000000000002 /* App */, A40000000000000000000003 /* Products */,); sourceTree = "<group>"; };
-		A40000000000000000000002 /* App */ = {isa = PBXGroup; children = (A20000000000000000000001, A20000000000000000000002, A20000000000000000000006, A20000000000000000000007, A20000000000000000000008, A20000000000000000000003, A20000000000000000000004,); path = App; sourceTree = "<group>"; };
-		A40000000000000000000003 /* Products */ = {isa = PBXGroup; children = (A20000000000000000000005 /* MRRClock.app */,); name = Products; sourceTree = "<group>"; };
+		A40000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A40000000000000000000002 /* App */,
+				B40000000000000000000001 /* MRRClockUITests */,
+				A40000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A40000000000000000000002 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* MRRClockApp.swift */,
+				A20000000000000000000002 /* PopoverView.swift */,
+				A20000000000000000000006 /* GoalListView.swift */,
+				A20000000000000000000007 /* GoalEditorView.swift */,
+				A20000000000000000000008 /* SettingsView.swift */,
+				A20000000000000000000003 /* Info.plist */,
+				A20000000000000000000004 /* MRRClock.entitlements */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000005 /* MRRClock.app */,
+				B20000000000000000000002 /* MRRClockUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B40000000000000000000001 /* MRRClockUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000001 /* SetupWindowTests.swift */,
+			);
+			path = MRRClockUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A50000000000000000000001 /* MRRClock */ = {isa = PBXNativeTarget; buildConfigurationList = A90000000000000000000002; buildPhases = (A30000000000000000000002 /* Sources */, A30000000000000000000001 /* Frameworks */, A30000000000000000000003 /* Resources */,); buildRules = (); dependencies = (); name = MRRClock; packageProductDependencies = (A70000000000000000000001 /* MRRClockCore */,); productName = MRRClock; productReference = A20000000000000000000005 /* MRRClock.app */; productType = "com.apple.product-type.application"; };
+		A50000000000000000000001 /* MRRClock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A90000000000000000000002 /* Build configuration list for PBXNativeTarget "MRRClock" */;
+			buildPhases = (
+				A30000000000000000000002 /* Sources */,
+				A30000000000000000000001 /* Frameworks */,
+				A30000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MRRClock;
+			packageProductDependencies = (
+				A70000000000000000000001 /* MRRClockCore */,
+			);
+			productName = MRRClock;
+			productReference = A20000000000000000000005 /* MRRClock.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B50000000000000000000001 /* MRRClockUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B90000000000000000000001 /* Build configuration list for PBXNativeTarget "MRRClockUITests" */;
+			buildPhases = (
+				B30000000000000000000002 /* Sources */,
+				B30000000000000000000001 /* Frameworks */,
+				B30000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B70000000000000000000001 /* PBXTargetDependency */,
+			);
+			name = MRRClockUITests;
+			productName = MRRClockUITests;
+			productReference = B20000000000000000000002 /* MRRClockUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A60000000000000000000001 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2600; LastUpgradeCheck = 2600; TargetAttributes = {A50000000000000000000001 = {CreatedOnToolsVersion = 26.0; };};}; buildConfigurationList = A90000000000000000000001; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = A40000000000000000000001; packageReferences = (A80000000000000000000001 /* XCLocalSwiftPackageReference "." */,); productRefGroup = A40000000000000000000003; projectDirPath = ""; projectRoot = ""; targets = (A50000000000000000000001 /* MRRClock */,); };
+		A60000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A50000000000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					B50000000000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = A50000000000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = A90000000000000000000001 /* Build configuration list for PBXProject "MRRClock" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A40000000000000000000001;
+			packageReferences = (
+				A80000000000000000000001 /* XCLocalSwiftPackageReference "." */,
+			);
+			productRefGroup = A40000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50000000000000000000001 /* MRRClock */,
+				B50000000000000000000001 /* MRRClockUITests */,
+			);
+		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A30000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A30000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A30000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001, A10000000000000000000002, A10000000000000000000004, A10000000000000000000005, A10000000000000000000006,); runOnlyForDeploymentPostprocessing = 0; };
+		A30000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* MRRClockApp.swift in Sources */,
+				A10000000000000000000002 /* PopoverView.swift in Sources */,
+				A10000000000000000000004 /* GoalListView.swift in Sources */,
+				A10000000000000000000005 /* GoalEditorView.swift in Sources */,
+				A10000000000000000000006 /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000000000000000000001 /* SetupWindowTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+
+/* Begin PBXTargetDependency section */
+		B70000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A50000000000000000000001 /* MRRClock */;
+			targetProxy = B60000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		AA0000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 6.0;}; name = Debug; };
-		AA0000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 6.0;}; name = Release; };
-		AA0000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = App/MRRClock.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = App/Info.plist; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; MACOSX_DEPLOYMENT_TARGET = 14.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = complete; SWIFT_VERSION = 6.0;}; name = Debug; };
-		AA0000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = App/MRRClock.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = App/Info.plist; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; MACOSX_DEPLOYMENT_TARGET = 14.0; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = complete; SWIFT_VERSION = 6.0;}; name = Release; };
+		AA0000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		AA0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = App/MRRClock.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M8CHZCXWL2;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = App/MRRClock.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M8CHZCXWL2;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		BA0000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M8CHZCXWL2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = MRRClock;
+			};
+			name = Debug;
+		};
+		BA0000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M8CHZCXWL2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrrclock.app.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = MRRClock;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A90000000000000000000001 = {isa = XCConfigurationList; buildConfigurations = (AA0000000000000000000001, AA0000000000000000000002,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		A90000000000000000000002 = {isa = XCConfigurationList; buildConfigurations = (AA0000000000000000000003, AA0000000000000000000004,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A90000000000000000000001 /* Build configuration list for PBXProject "MRRClock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000001 /* Debug */,
+				AA0000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A90000000000000000000002 /* Build configuration list for PBXNativeTarget "MRRClock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000003 /* Debug */,
+				AA0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B90000000000000000000001 /* Build configuration list for PBXNativeTarget "MRRClockUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA0000000000000000000001 /* Debug */,
+				BA0000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A80000000000000000000001 /* XCLocalSwiftPackageReference "." */ = {isa = XCLocalSwiftPackageReference; relativePath = .; };
+		A80000000000000000000001 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A70000000000000000000001 /* MRRClockCore */ = {isa = XCSwiftPackageProductDependency; package = A80000000000000000000001 /* XCLocalSwiftPackageReference "." */; productName = MRRClockCore; };
+		A70000000000000000000001 /* MRRClockCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A80000000000000000000001 /* XCLocalSwiftPackageReference "." */;
+			productName = MRRClockCore;
+		};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A60000000000000000000001 /* Project object */;

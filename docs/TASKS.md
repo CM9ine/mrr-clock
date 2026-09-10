@@ -86,7 +86,7 @@ Tick here as you close them:
 - [x] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [x] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
 - [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
 - [x] [T20](https://github.com/CM9ine/mrr-clock/issues/20)
-- [ ] [T21](https://github.com/CM9ine/mrr-clock/issues/21)
+- [x] [T21](https://github.com/CM9ine/mrr-clock/issues/21)
 
 ## Notes on sequencing
 

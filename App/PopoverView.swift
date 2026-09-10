@@ -14,7 +14,9 @@ struct PopoverView: View {
             case .needsSetup:
                 Button { showWindow("settings") } label: { prompt("Add your Stripe key", systemImage: "key") }.buttonStyle(.plain)
             case .noGoals:
-                Button { showWindow("goals") } label: { prompt("Add your first goal", systemImage: "flag") }.buttonStyle(.plain)
+                Button { showWindow("goals") } label: { prompt("Add your first goal", systemImage: "flag") }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("mrrclock.add-first-goal")
             case .loading(previous: .some), .loaded:
                 snapshotContent(dimmed: false)
             case .stale:
@@ -98,8 +100,10 @@ struct PopoverView: View {
                     .buttonStyle(.plain)
                     Button("Goals") { showWindow("goals") }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("mrrclock.goals-button")
                     Button { showWindow("settings") } label: { Image(systemName: "gearshape") }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("mrrclock.settings-button")
                 }
             }
             .opacity(dimmed ? 0.65 : 1)
@@ -144,6 +148,7 @@ struct PopoverView: View {
     }
 
     private func showWindow(_ id: String) {
+        NSApp.keyWindow?.orderOut(nil)
         openWindow(id: id)
         NSApp.activate(ignoringOtherApps: true)
     }
