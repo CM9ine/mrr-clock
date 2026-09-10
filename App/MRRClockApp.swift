@@ -30,10 +30,30 @@ struct MRRClockApp: App {
 
     var body: some Scene {
         MenuBarExtra(state.title) {
-            PopoverView(goalStore: goals, config: config)
+            PopoverView()
                 .environmentObject(state)
                 .task { await state.start() }
         }
         .menuBarExtraStyle(.window)
+
+        Window("Goals", id: "goals") {
+            NavigationStack {
+                GoalListView(store: goals, config: config, revenue: state.revenue ?? emptyRevenue) {
+                    Task { await state.recomputeGoals() }
+                }
+            }
+            .environmentObject(state)
+            .frame(minWidth: 520, minHeight: 500)
+        }
+        .defaultSize(width: 560, height: 560)
+
+        Window("Settings", id: "settings") {
+            SettingsView()
+        }
+        .defaultSize(width: 460, height: 520)
+    }
+
+    private var emptyRevenue: RevenueSnapshot {
+        RevenueSnapshot(mrr: .zero(config.currency), earnedToDate: .zero(config.currency), breakdown: [], subscriptionCount: 0, churnRisk: .zero(config.currency), warnings: [])
     }
 }
