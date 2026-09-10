@@ -1,9 +1,9 @@
 # Task list
 
-20 tasks: 19 product tasks and one tooling follow-up. Each is one focused session: read the task file, read the docs it names, write
+21 tasks: 19 product tasks, one tooling follow-up, and one UI regression gate. Each is one focused session: read the task file, read the docs it names, write
 the tests, make them pass. Rules in [TDD.md](TDD.md). Numbers in [METRICS.md](METRICS.md).
 
-Work T01–T19 in order — each depends only on tasks above it.
+Work T01–T17, then T21, then T18–T19. T18 is blocked by the T21 UI regression gate.
 T20 is an independently assignable foundation follow-up; it may be worked now. To hand one to an agent, use
 the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task itself.
 
@@ -48,7 +48,7 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 | --- | --- | --- | --- | --- |
 | T16 | Xcode shell, `MenuBarExtra`, popover | T14, T15 | [T16](tasks/T16-app-shell.md) | [#16](https://github.com/CM9ine/mrr-clock/issues/16) |
 | T17 | Goals UI and Settings | T16 | [T17](tasks/T17-goals-settings-ui.md) | [#17](https://github.com/CM9ine/mrr-clock/issues/17) |
-| T18 | Auto-refresh scheduling and launch at login | T17 | [T18](tasks/T18-scheduling-launch.md) | [#18](https://github.com/CM9ine/mrr-clock/issues/18) |
+| T18 | Auto-refresh scheduling and launch at login | T17, T21 | [T18](tasks/T18-scheduling-launch.md) | [#18](https://github.com/CM9ine/mrr-clock/issues/18) |
 
 ## M6 · Ship
 
@@ -61,6 +61,15 @@ the prompt in [AGENT-PROMPT.md](AGENT-PROMPT.md) — it finds the next open task
 | # | Task | Depends | Brief | Issue |
 | --- | --- | --- | --- | --- |
 | T20 | Make plain `swift test` work locally and in CI | T01 | [T20](tasks/T20-swift-test-toolchain.md) | [#20](https://github.com/CM9ine/mrr-clock/issues/20) |
+
+## UI regression gate · M5
+
+| # | Task | Depends | Brief | Issue |
+| --- | --- | --- | --- | --- |
+| T21 | Menu-bar setup window UI regression tests | T17 | [T21](tasks/T21-menubar-window-ui-tests.md) | [#21](https://github.com/CM9ine/mrr-clock/issues/21) |
+
+Assign T21 explicitly: the default lowest-open-issue prompt selects T18, whose brief now
+correctly stops on the open T21 dependency.
 
 Assign T20 explicitly to an agent: the default lowest-open-issue prompt still selects
 T04 while it remains open. T20 does not block the existing product sequence.
@@ -77,6 +86,7 @@ Tick here as you close them:
 - [x] [T16](https://github.com/CM9ine/mrr-clock/issues/16) · [x] [T17](https://github.com/CM9ine/mrr-clock/issues/17) · [ ] [T18](https://github.com/CM9ine/mrr-clock/issues/18)
 - [ ] [T19](https://github.com/CM9ine/mrr-clock/issues/19)
 - [x] [T20](https://github.com/CM9ine/mrr-clock/issues/20)
+- [ ] [T21](https://github.com/CM9ine/mrr-clock/issues/21)
 
 ## Notes on sequencing
 
